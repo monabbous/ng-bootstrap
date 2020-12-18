@@ -1,0 +1,11 @@
+<ol class="breadcrumb {{breadcrumbListClass}}">
+  <ng-container *ngFor="let breadcrumb of breadcrumbsService.breadcrumbs$ | async">
+    <li class="breadcrumb-item {{breadcrumbListItemClass}}" routerLinkActive="active" *ngIf="breadcrumb.label">
+      <ng-container *ngTemplateOutlet="linkTemplate || templateRef; context: breadcrumb"></ng-container>
+    </li>
+  </ng-container>
+</ol>
+
+<ng-template #templateRef let-label="label" let-url="url" let-index="index">
+  <a [routerLink]="url" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{label}}</a>
+</ng-template>

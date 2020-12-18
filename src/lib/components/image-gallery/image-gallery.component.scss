@@ -1,0 +1,24 @@
+
+:host {
+  min-width: 200px;
+  min-height: 300px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .gallery-slider {
+    overflow-x: auto;
+    .slide-item {
+      min-height: 100px;
+      min-width: 100px;
+      .image {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        height: 100% !important;
+        width: 100% !important;
+        flex-grow: 1;
+        position: absolute;
+      }
+    }
+  }
+}

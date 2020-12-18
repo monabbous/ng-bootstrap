@@ -1,0 +1,31 @@
+<ul class="pagination">
+  <li class="page-item" [class.disabled]="page <= 1">
+    <button class="page-link" aria-label="Previous" (click)="page = 1" [disabled]="page <= 1">
+      <span aria-hidden="true">&laquo;&laquo;</span>
+      <span class="sr-only">First</span>
+    </button>
+  </li>
+  <li class="page-item" [class.disabled]="page <= 1">
+    <button class="page-link" aria-label="Previous" (click)="page = page - 1" [disabled]="page <= 1">
+      <span aria-hidden="true">&laquo;</span>
+      <span class="sr-only">Previous</span>
+    </button>
+  </li>
+  <ng-container *ngFor="let p of pages$ | async">
+    <li class="page-item" [class.active]="+p === page">
+      <button class="page-link" (click)="page = p">{{p}}</button>
+    </li>
+  </ng-container>
+  <li class="page-item" [class.disabled]="page >= lastPage">
+    <button class="page-link" aria-label="Previous" (click)="page = page + 1" [disabled]="page >= lastPage">
+      <span aria-hidden="true">&raquo;</span>
+      <span class="sr-only">Next</span>
+    </button>
+  </li>
+  <li class="page-item" [class.disabled]="page >= lastPage">
+    <button class="page-link" aria-label="Previous" (click)="page = lastPage" [disabled]="page >= lastPage">
+      <span aria-hidden="true">&raquo;&raquo;</span>
+      <span class="sr-only">Last</span>
+    </button>
+  </li>
+</ul>

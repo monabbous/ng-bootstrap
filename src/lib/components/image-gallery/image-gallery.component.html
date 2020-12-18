@@ -1,0 +1,46 @@
+<div class="d-flex">
+  <ng-container *ngIf="value.length > 1">
+    <button type="button" class="btn btn-light" (click)="swapImages(selected.sort, selected.sort - 1)" *ngIf="!this.disabled">
+      <i
+        class="fas fa-fw fa-chevron-left"
+        *ngIf="dir === 'rtl'"></i>
+      <i
+        class="fas fa-fw fa-chevron-right"
+        *ngIf="dir === 'ltr'"></i>
+    </button>
+    <span class="mx-1 my-auto">
+    {{selected?.sort + 1}}
+      <small> / {{value.length}}</small>
+    </span>
+    <button type="button" class="btn btn-light" (click)="swapImages(selected.sort, selected.sort + 1)" *ngIf="!this.disabled">
+      <i
+        class="fas fa-fw fa-chevron-right"
+        *ngIf="dir === 'rtl'"></i>
+      <i
+        class="fas fa-fw fa-chevron-left"
+        *ngIf="dir === 'ltr'"></i>
+    </button>
+  </ng-container>
+  <div class="flex-grow-1"></div>
+  <button type="button"
+          (click)="deleteImage(selected.sort)"
+          class="btn btn-danger" *ngIf="value.length && !this.disabled">
+    <i class="fas fa-fw fa-trash"></i>
+  </button>
+</div>
+<image-input
+  [placeholderValue]="selected"
+  [disabled]="disabled"
+  [modifier]="imageInputModifier"
+  (valueChange)="newImage($event)"
+  class="flex-grow-1 mt-1"
+></image-input>
+<div class="row flex-nowrap gallery-slider p-md-4 p-2 mx-n2 " *ngIf="value.length > 1">
+  <div class="col-md-4 slide-item d-flex flex-column px-1" *ngFor="let image of value; let i = index">
+    <div class="bg-white rounded position-relative flex-grow-1 clickable shadow-sm"
+         [class.shadow]="image.id === selected.id"
+         (click)="selected = image">
+      <div class="image" [style.backgroundImage]="'url(' + image.src + ')'"></div>
+    </div>
+  </div>
+</div>

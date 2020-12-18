@@ -1,0 +1,22 @@
+{
+  "name": "@monabbous/ng-bootstrap",
+  "version": "0.5.0",
+  "peerDependencies": {
+    "@angular/common": "^9.1.12",
+    "@angular/core": "^9.1.12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/monabbous/ng-bootstrap.git"
+  },
+  "dependencies": {
+    "tslib": "^1.10.0"
+  },
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "components"
+  ],
+  "author": "monabbous",
+  "devDependencies": {}
+}

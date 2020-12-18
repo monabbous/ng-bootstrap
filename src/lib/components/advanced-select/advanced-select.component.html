@@ -1,0 +1,38 @@
+<div class="advanced-select-popover-target" popover
+     [popoverContent]="popoverTemplate"
+     popoverMatchHeight="true" popoverMatchWidth="true" #popover="popover"
+     popoverClass="advanced-select-popover"
+     [popoverPlacement]="{vertical: 'auto', horizontal: 'center'}" [popoverArrow]="false"></div>
+<div class="input-group-prepend" *ngIf="valueAsArray.length" style="max-width: 100%;">
+  <span class="input-group-text border-0" style="background: transparent;max-width: 100%;">
+    <div class="values-container">
+      <label class="badge bg-primary"
+             *ngFor="let option of valueAsArray"
+             [innerHTML]="getSelectedLabel(option)" (click)="deselectValue(option)"></label>
+    </div>
+  </span>
+</div>
+<input style="min-width: 150px" type="text" class="form-control border-0 rounded"
+       [(ngModel)]="query"
+       [readOnly]="!queryEnabled"
+       [ngModelOptions]="{standalone: true}"
+       (focus)="onFocus()" #inputElement
+       (keydown.escape)="inputElement.blur();popover.hide(); eventHandle($event)"
+       (keydown.tab)="inputElement.blur();popover.hide();"
+       (keydown.backspace)="backspace()" (keydown.enter)="enter(); eventHandle($event)"
+       (keydown.arrowUp)="moveIndex(-1); eventHandle($event)" (keydown.arrowDown)="moveIndex(1); eventHandle($event)">
+<div class="input-group-append" *ngIf="arrow">
+  <label class="input-group-text border-0"
+         (click)="onArrowClick()"
+         style="background: transparent; cursor:pointer;">
+    <i class="fas fa-chevron-{{popover?.popover?.show ? 'up' : 'down'}} fa-fw"></i>
+  </label>
+</div>
+<ng-template #popoverTemplate>
+  <ng-container *ngIf="options && options.length; else content">
+    <advanced-option *ngFor="let option of options" [value]="option"></advanced-option>
+  </ng-container>
+</ng-template>
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
