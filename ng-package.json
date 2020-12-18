@@ -2,6 +2,6 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/ng-bootstrap",
   "lib": {
-    "entryFile": "src/projects/nabbous-bootstrap-components.ts"
+    "entryFile": "src/public-api.ts"
   }
 }

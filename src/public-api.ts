@@ -16,4 +16,4 @@ export * from './lib/services/popover.service';
 export * from './lib/services/trigger-on-viewport.service';
 export * from './lib/services/breadcrumbs.service';
 export * from './lib/services/img.service';
-export * from './lib/nabbous-bootstrap-components.module';
+export * from './lib/ng-bootstrap.module';
