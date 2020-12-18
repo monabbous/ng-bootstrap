@@ -55,7 +55,12 @@ export type AdvancedSelectOption = AdvancedSelectOptionInterface | AdvancedSelec
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'advanced-option',
-  template: `<ng-content></ng-content>`,
+  template: `
+    <div #content [class.d-none]="!content.childNodes.length">
+      <ng-content></ng-content>
+    </div>
+    <div [innerHTML]="label" *ngIf="!content.childNodes.length"></div>
+  `,
   styles: [
       `
       :host {
@@ -185,8 +190,6 @@ export class AdvancedOptionComponent implements AfterContentInit, OnDestroy {
 
 
     this.selected = !!this.parent.valueAsArray.find(value => compareOptionValues(this.value, value));
-    // this.elementRef.nativeElement.innerHTML = this.label;
-
   }
 
   ngOnDestroy(): void {
@@ -404,7 +407,17 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
   }
 
   writeValue(value: AdvancedSelectOptionValue | AdvancedSelectOptionValue[]): void {
-    // this.value = value;
+    if ([null, undefined, ''].includes(value)) {
+      this.value = this.multiple ? [] : undefined;
+    } else if (this.multiple && !Array.isArray(value)) {
+      this.value = [value];
+    } else if (Array.isArray(value)) {
+      this.value = [...value].shift();
+    } else {
+      this.value = value;
+    }
+
+    this.advancedOptionComponents.forEach(component => component.updateState());
   }
 
   ngOnDestroy(): void {
