@@ -67,7 +67,6 @@ export class ImgDirective {
       this.image.remove();
     };
 
-    console.log(this.thumbnailSrc);
 
     this.status = 'loading';
     if (this.thumbnailSrc) {

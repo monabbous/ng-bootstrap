@@ -27,6 +27,22 @@ interface AdvancedSelectOptionInterface {
   selectedStateLabel?: string;
 }
 
+function DOMContains(parent: Node, child: Node) {
+  let isChild = false;
+
+  if (child.isSameNode(parent)) {
+    isChild = true;
+  }
+
+  // tslint:disable-next-line:no-conditional-assignment
+  while (child = child.parentNode) {
+    if (child.isSameNode(parent)) {
+      isChild = true;
+    }
+  }
+
+  return isChild;
+}
 
 function compareOptionValues(a: AdvancedSelectOption, b: AdvancedSelectOption) {
   let aValue;
@@ -93,6 +109,17 @@ export type AdvancedSelectOption = AdvancedSelectOptionInterface | AdvancedSelec
         content: '\\f14a';
         font-family: 'Font Awesome 5 Free';
         padding: 0.3em;
+      }
+
+      :host::after {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: 2 !important;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
       }
 
       :host.highlighted {
@@ -249,6 +276,9 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
     if (query) {
       this.highlightedOptionIndex$.next(0);
     }
+    if (this.popover?.popover) {
+      this.popover.popover.updatePopOverPosition();
+    }
     this.queryValue = query;
     this.queryChange.emit(query);
   }
@@ -378,7 +408,7 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
   onChange = (value): any => null;
 
   ngAfterViewInit(): void {
-    fromEvent(window, 'click')
+    fromEvent(window, 'mouseup')
       .pipe(
         takeUntil(this.ngDestroy$),
       )
@@ -461,7 +491,7 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
     this.popover.show();
     setTimeout(() => {
       if (window.innerHeight <= 400) {
-        this.inputElement.nativeElement.scrollIntoView({behavior: 'smooth'});
+        // this.inputElement.nativeElement.scrollIntoView({behavior: 'smooth'});
       }
     }, 600);
   }
