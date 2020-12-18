@@ -57,9 +57,9 @@ function compareOptionValues(a: AdvancedSelectOption, b: AdvancedSelectOption) {
   //   }
   // }
   // return false
-  aValue = typeof a === 'string' || typeof a === 'number' ? a : a.value;
+  aValue = typeof a === 'string' || typeof a === 'number' ? a : a?.value;
   aValue = btoa(unescape(encodeURIComponent(JSON.stringify(aValue))));
-  bValue = typeof b === 'string' || typeof b === 'number' ? b : b.value;
+  bValue = typeof b === 'string' || typeof b === 'number' ? b : b?.value;
   bValue = btoa(unescape(encodeURIComponent(JSON.stringify(bValue))));
 
   return aValue === bValue;
@@ -276,9 +276,6 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
     if (query) {
       this.highlightedOptionIndex$.next(0);
     }
-    if (this.popover?.popover) {
-      this.popover.popover.updatePopOverPosition();
-    }
     this.queryValue = query;
     this.queryChange.emit(query);
   }
@@ -426,6 +423,7 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
         this.advancedOptionComponents = this.optionsComponentList.toArray();
         this.advancedOptionComponents.forEach((component, index) => component.index = index);
         this.highlightedOptionIndex$.next(-1);
+        setTimeout(() => this.popover?.popover?.updatePopOverPosition());
       });
   }
 
