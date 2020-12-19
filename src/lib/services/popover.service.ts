@@ -271,7 +271,7 @@ export class Popover {
 
     if (this.maxWindowHeight) {
       this.element.style.maxHeight =
-        `${Math.max(window.innerHeight * 0.5, window.innerHeight * 0.7 - anchorRect.height)}px - 2em`;
+        `calc(${Math.max(window.innerHeight * 0.5, window.innerHeight * 0.7 - anchorRect.height)}px - 2em)`;
       this.element.style.overflowY = 'auto';
     } else {
       this.element.style.maxHeight = ``;
