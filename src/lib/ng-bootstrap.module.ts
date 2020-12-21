@@ -16,6 +16,7 @@ import {NG_MODEL_ERROR_MAPPER, NgModelErrorMessageDirective} from './directives/
 import {Observable} from 'rxjs';
 import {IMAGE_SERVICE_CONFIG} from './services/img.service';
 import {AdvancedOptionComponent, AdvancedSelectComponent} from './components/advanced-select/advanced-select.component';
+import {StartRatingComponent} from './components/start-rating/start-rating.component';
 
 
 @NgModule({
@@ -77,6 +78,14 @@ export class ImgModule {
       ],
     });
   }
+}
+
+@NgModule({
+  declarations: [StartRatingComponent],
+  imports: [CommonModule, FormsModule],
+  exports: [StartRatingComponent],
+})
+export class StarRatingModule {
 }
 
 @NgModule({

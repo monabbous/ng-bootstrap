@@ -1,0 +1,17 @@
+:host {
+  border: none;
+
+  & > div {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    input[type=range] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      filter: opacity(0);
+    }
+  }
+}

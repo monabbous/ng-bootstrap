@@ -1,0 +1,6 @@
+<div>
+  <input [(ngModel)]="rangeValue" type="range" [min]="defaultRangeValue" max="5" [step]="halfStar ? 0.5 : 1" [readOnly]="readOnly" [disabled]="disabled">
+  <i class="fas fa-star fa-fw" *ngFor="let star of fullStars"></i>
+  <i class="fas fa-star-half-alt fa-fw" *ngIf="hasHalfStar"></i>
+  <i class="far fa-star fa-fw" *ngFor="let star of emptyStars"></i>
+</div>
