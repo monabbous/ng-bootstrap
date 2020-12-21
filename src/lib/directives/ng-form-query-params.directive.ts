@@ -1,5 +1,5 @@
 import {AfterContentInit, Directive, EventEmitter, OnDestroy, Self} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormControl, NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {debounceTime, distinctUntilChanged, switchMap, takeUntil, tap} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs';
@@ -37,10 +37,7 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
         }),
         tap(queryParams => {
           this.queryParams = queryParams;
-          for (const p of Object.keys(queryParams)) {
-            const value = queryParams[p];
-            this.form.form.get(p)?.setValue(value);
-          }
+          this.updateForm(this.queryParams, this.form);
         }),
       )
       .subscribe();
@@ -54,10 +51,7 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
         debounceTime(500),
         tap(queryParams => {
           if (!this.queryCheckedFirst) {
-            for (const p of Object.keys(this.queryParams)) {
-              const value = this.queryParams[p];
-              this.form.form.get(p)?.setValue(value);
-            }
+            this.updateForm(this.queryParams, this.form);
             this.queryCheckedFirst = true;
             return;
           }
@@ -65,5 +59,20 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
         })
       )
       .subscribe();
+  }
+
+  updateForm(queryParams, form: NgForm) {
+    for (const p of Object.keys(this.queryParams)) {
+      const control = form.form.get(p) as FormControl;
+      let value = queryParams[p];
+      switch (typeof control.value) {
+        case 'number':
+          value = +value;
+          break;
+        case 'boolean':
+          value = value === 'true';
+          break;
+      }
+    }
   }
 }
