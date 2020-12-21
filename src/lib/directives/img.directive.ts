@@ -24,11 +24,11 @@ export class ImgDirective {
 
   @HostBinding('src') src;
 
-  @Attribute('loadingStrategy') @Input() loadingStrategy: 'lazy' | 'eager' = 'lazy';
+  @Input() loadingStrategy: 'lazy' | 'eager' = 'lazy';
 
   thumbnailSrcValue: SafeUrl | string = this.imgService.loadingImage;
 
-  @Attribute('thumbnailSrc') @Input('thumbnailSrc') set thumbnailSrc(src) {
+  @Input('thumbnailSrc') set thumbnailSrc(src) {
     this.thumbnailSrcValue = src;
     if (this.status === 'loading') {
       this.src = src as string;
@@ -41,7 +41,7 @@ export class ImgDirective {
 
   errorSrcValue: SafeUrl | string = this.imgService.imageNotFound;
 
-  @Attribute('errorSrc') @Input('errorSrc') set errorSrc(src) {
+  @Input('errorSrc') set errorSrc(src) {
     this.errorSrcValue = src;
     if (this.status === 'error') {
       this.src = src as string;
@@ -52,7 +52,7 @@ export class ImgDirective {
     return this.errorSrcValue;
   }
 
-  @Attribute('src') @Input('src') set source(src) {
+  @Input('src') set source(src) {
     this.originalSrc = src;
     this.image = new Image();
     this.image.remove();
