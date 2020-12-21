@@ -3,18 +3,18 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'start-rating',
-  templateUrl: './start-rating.component.html',
-  styleUrls: ['./start-rating.component.scss'],
+  selector: 'star-rating',
+  templateUrl: './star-rating.component.html',
+  styleUrls: ['./star-rating.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => StartRatingComponent),
+      useExisting: forwardRef(() => StarRatingComponent),
       multi: true
     }
   ]
 })
-export class StartRatingComponent implements OnInit, ControlValueAccessor {
+export class StarRatingComponent implements OnInit, ControlValueAccessor {
   @HostBinding('class.form-control') bootstrap = true;
   disabled = false;
 
