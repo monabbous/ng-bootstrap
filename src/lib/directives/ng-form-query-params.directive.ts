@@ -65,7 +65,7 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
     for (const p of Object.keys(this.queryParams)) {
       const control = form.form.get(p) as FormControl;
       let value = queryParams[p];
-      switch (typeof control.value) {
+      switch (typeof control?.value) {
         case 'number':
           value = +value;
           break;
@@ -73,6 +73,7 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
           value = value === 'true';
           break;
       }
+      control?.setValue(value);
     }
   }
 }
