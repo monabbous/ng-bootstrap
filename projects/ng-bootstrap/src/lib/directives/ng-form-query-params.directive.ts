@@ -65,13 +65,14 @@ export class NgFormQueryParamsDirective implements OnDestroy, AfterContentInit {
     for (const p of Object.keys(this.queryParams)) {
       const control = form.form.get(p) as FormControl;
       let value = queryParams[p];
-      switch (typeof control?.value) {
-        case 'number':
-          value = +value;
-          break;
-        case 'boolean':
-          value = value === 'true';
-          break;
+      if (['', undefined, 'undefined'].includes(value)) {
+        value = undefined;
+      } else if (!isNaN(+value)) {
+        value = value;
+      } else if (value === 'true') {
+        value = true;
+      } else if (value === 'false') {
+        value = false;
       }
       control?.setValue(value);
     }

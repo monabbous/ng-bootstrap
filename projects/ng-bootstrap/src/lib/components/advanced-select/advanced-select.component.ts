@@ -257,7 +257,7 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
     if (this.value) {
       if (multiple && !Array.isArray(this.value)) {
         this.value = [this.value];
-      } else if (Array.isArray(this.value)) {
+      } else if (!multiple && Array.isArray(this.value)) {
         this.value = this.value.shift();
       }
     } else if (multiple) {
@@ -439,7 +439,7 @@ export class AdvancedSelectComponent implements AfterViewInit, OnDestroy, Contro
       this.value = this.multiple ? [] : undefined;
     } else if (this.multiple && !Array.isArray(value)) {
       this.value = [value];
-    } else if (Array.isArray(value)) {
+    } else if (!this.multiple && Array.isArray(value)) {
       this.value = [...value].shift();
     } else {
       this.value = value;
