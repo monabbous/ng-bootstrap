@@ -390,6 +390,7 @@ export class Popover {
   }
 }
 
+// noinspection AngularMissingOrInvalidDeclarationInModule
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'flying-popover',
