@@ -78,7 +78,7 @@ export type AdvancedSelectOption = AdvancedSelectOptionInterface | AdvancedSelec
     <div [innerHTML]="label" *ngIf="!content.childNodes.length"></div>
   `,
   styles: [
-      `
+    `
       :host {
         cursor: pointer;
         position: relative;
@@ -138,6 +138,8 @@ export class AdvancedOptionComponent implements AfterContentInit, OnDestroy {
 
   @HostBinding('class') class = 'dropdown-item';
   valueValue: AdvancedSelectOption;
+
+  optionValue: any;
 
   @Input() set value(value) {
     this.valueValue = value;
@@ -215,8 +217,18 @@ export class AdvancedOptionComponent implements AfterContentInit, OnDestroy {
       this.parent.advancedOptionComponents.push(this);
     }
 
+    const valueIndex = this.parent.valueAsArray.findIndex(value => compareOptionValues(this.value, value));
+    this.selected = valueIndex > -1;
+    console.log(this.selected && !(this.parent.valueAsArray[valueIndex]?.label));
+    if (this.selected && !(this.parent.valueAsArray[valueIndex]?.label)) {
+      const arr = this.parent.valueAsArray;
+      if (typeof arr[valueIndex] !== 'object') {
+        arr[valueIndex] = {value: arr[valueIndex]};
+      }
+      arr[valueIndex].label = this.label;
 
-    this.selected = !!this.parent.valueAsArray.find(value => compareOptionValues(this.value, value));
+      this.parent.value = arr;
+    }
   }
 
   ngOnDestroy(): void {

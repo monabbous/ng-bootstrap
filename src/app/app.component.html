@@ -18,6 +18,12 @@
           </div>
         </div>
       </form>
+      <div class="col-md-4">
+        <advanced-select [ngModel]="5">
+          <advanced-option [value]="{label: 'Five', value: 5}"></advanced-option>
+          <advanced-option [value]="6">Six</advanced-option>
+        </advanced-select>
+      </div>
     </div>
   </div>
 </div>
