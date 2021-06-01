@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {mergeMap} from 'rxjs/operators';
+import {ImageInputValue} from 'ng-bootstrap';
+import {of, throwError} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'monabbous-ng-bootstrap';
+
+  modifier() {
+    return mergeMap((v: ImageInputValue) => {
+      if (confirm()) {
+        return of(v);
+      } else {
+        return throwError(null);
+      }
+    });
+  }
 }

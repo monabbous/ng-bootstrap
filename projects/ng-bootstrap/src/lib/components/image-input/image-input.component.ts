@@ -38,6 +38,8 @@ export class ImageInputComponent implements OnInit, ControlValueAccessor {
 
   originalValue: ImageInputValue;
 
+  @Input() multiple = false;
+
   @Input() set placeholderValue(value: ImageInputValue) {
     this.originalValue = value;
     if (value && value.src) {
@@ -114,24 +116,39 @@ export class ImageInputComponent implements OnInit, ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  fileChange($event: Event | DragEvent) {
-    const target = ($event.target) as HTMLInputElement;
-    const files = (target.files || ($event as DragEvent).dataTransfer.files) as FileList;
-    if (files.length) {
+  getProcessFile(file: File): Promise<ImageInputValue> {
+    return new Promise(res => {
       const reader = new FileReader();
       reader.onload = () => {
         const value = new ImageInputValue();
-        value.blob = files.item(0);
+        value.blob = file;
         value.src = reader.result;
         value.id = btoa(Math.random().toString());
-        this.value = value;
+        res(value);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  fileChange($event: Event | DragEvent) {
+    if (this.disabled) {
+      $event.preventDefault();
+      return;
+    }
+    const target = ($event.target) as HTMLInputElement;
+    const files = (target.files || ($event as DragEvent).dataTransfer.files) as FileList;
+    if (files.length) {
+
+      const process = async () => {
+        for (let i = 0; files.length > i; i++) {
+          const file = files.item(i);
+          this.value = await this.getProcessFile(file);
+        }
         target.value = null;
       };
-
-      reader.readAsDataURL(files.item(0));
-    } else {
-      // this.hasImage = false;
-      // this.value = {};
+      process();
     }
+
+
   }
 }
